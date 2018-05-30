@@ -4,7 +4,7 @@ const logger = require('morgan')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const routes = require('./routes')
-const stripe = require("stripe")("sk_test_SomoK17KafHOIXWqNAegapd5");
+
 
 
 
