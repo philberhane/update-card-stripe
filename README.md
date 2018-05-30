@@ -6,7 +6,7 @@
 
 2) Install dependencies by running 'npm install' on the terminal while in the root folder
 
-3) Go to Stripe's website, log in, and enable Test Mode (should be on bottom of the page)
+3) Go to Stripe's website, log in, and enable Test Mode (there should be a 'View Test Data' on bottom of the page)
 
 4) While on Stripe's website, create a test customer with an arbitrary email and random card information (the actual card number must be '4242424242424242')
 

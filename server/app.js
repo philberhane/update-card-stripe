@@ -7,6 +7,7 @@ const routes = require('./routes')
 
 
 
+
 let app = express()
 app.use(express.static('../client'))
 

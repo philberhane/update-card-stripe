@@ -11,7 +11,7 @@ module.exports = {
     
     updateCard(req, res) {
         
-    const stripe = require("stripe")("sk_test_SomoK17KafHOIXWqNAegapd5");
+    const stripe = require("stripe")('sk_test...');
         
     
     /* STEP ONE:
