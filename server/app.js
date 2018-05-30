@@ -9,6 +9,7 @@ const stripe = require("stripe")("sk_test_SomoK17KafHOIXWqNAegapd5");
 
 
 let app = express()
+app.use(express.static('../client'))
 
 
 app.use(bodyParser.json())
@@ -19,7 +20,12 @@ app.use(cors())
 
 
 
-app.get('/updateCard', routes.updateCard)
+app.post('/updateCard', routes.updateCard)
+
+app.get('/', function (req, res) {
+    const path = require('path')
+    res.sendFile(path.resolve('../client/index.html'))
+})
 
 
 

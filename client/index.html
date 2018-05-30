@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+
+<html>
+   <head>
+      <link rel="stylesheet" href="css/style.css" type="text/css" >
+
+    
+   </head>
+
+    <body>
+    <script src="https://js.stripe.com/v3/"></script>
+
+<form id="payment-form">
+ <div class="form-row">
+ <label>Please enter your email</label>
+  <div class="form-row">
+   <input id="email" placeholder= "Email Address">
+     </div>
+    </div>
+    <div class="form-row">
+    <label>Please enter your name (as it appears on your credit card)</label>
+    </div>
+  <div class="form-row">
+   <input id="name" placeholder= "Name">
+     </div>
+  <div class="form-row">
+    <label for="card-element">
+      Credit or debit card
+    </label>
+    <div id="card-element">
+      <!-- A Stripe Element will be inserted here. -->
+      
+    </div>
+
+    <!-- Used to display form errors. -->
+    <div id="card-errors" role="alert"></div>
+  </div>
+
+  <button id="button">Update Card</button>
+  
+  <div id="server-response" role="alert">
+      
+  </div>
+</form>
+   
+      
+      
+      
+      
+      <script type="text/javascript" src="js/main.js"> </script>
+    </body>
+
+
+
+
+
+</html>

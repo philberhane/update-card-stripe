@@ -1,62 +1,77 @@
 module.exports = {
     
-    /* The following function will
+    /* THE FOLLOWING FUNCTION WILL:
    
    1) Retrieve the Customer's ID from Stripe's database using their email.
    2) Use this ID to retreive the Credit Card ID
    3) Use both the Customer and Credit Card IDs to Delete the Credit Card
-   4) Add a new Credit Card, thus completing our update
+   4) Add a new Credit Card using the tokenized information, thus completing our update
    
     */
     
     updateCard(req, res) {
         
     const stripe = require("stripe")("sk_test_SomoK17KafHOIXWqNAegapd5");
+        
     
-   
-        
- /* STEP ONE:
- Retrieve the Customer's ID from Stripe's database using their email. 
- */
-        
+    /* STEP ONE:
+    Retrieve the Customer's ID from Stripe's database using their email. 
+    */   
     stripe.customers.list(
-  { email: 'customer@gmail.com' },
-  function(err, customers) {
-    // asynchronously called
-       const customerId = customers.data[0].id
-   //    console.log(customerId)
+        { email: req.body.email },
+        function(err, customers) {
+            const customerId = customers.data[0].id
        
-      /*STEP TWO:
-      Use Customer ID to retreive the Credit Card ID
-      */
-       
+            
+            
+            /*STEP TWO:
+            Use Customer ID to retreive the Credit Card ID
+            */
             stripe.customers.listCards(
                 customerId, function(err, cards) {
-                // asynchronously called
-                const cardId = cards.data[0].id
+
+                /*This "if" statement basically says to check if the user
+                has a card on file. If so, continue to update it. If not,
+                then send the message 'You dont have a card on file'
+                */
+                 if (cards.data[0]) {
+                    
+                    const cardId = cards.data[0].id
+                
+               
                 
                    /* STEP THREE:
-                    Use both the Customer and Credit Card IDs to Delete the Credit Card
+                    Use both the Customer ID and Credit Card ID to Delete the Credit Card
                     */  
                     stripe.customers.deleteCard(
-                    customerId,
-                    cardId,
+                        customerId,
+                        cardId,
                         function(err, confirmation) {
-                            // asynchronously called
-                            console.log('The card has been successfully deleted!')
                             }
                             );
                     
-                });
-      
-  }
-);
-    
-
-    
-    
-    
-    
-}
-    
+                     
+                    /* STEP FOUR:
+                    Add a new Credit Card using the tokenized information, thus completing our update
+                    */
+                    stripe.customers.createSource(
+                        customerId,
+                        { card: req.body.token },
+                        function(err, card) {
+                            res.status(201).send({ 
+                                message: 'Success: The card has been successfully updated!!'
+                                })
+                        }
+                        );
+                    
+                    
+                } else {
+                    res.status(500).send({
+                        message: 'Error: You do not have a card on file to update!'
+                            })
+                       }
+                    
+        })
+    })         
+  }   
 }
